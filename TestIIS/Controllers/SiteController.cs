@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Bogus;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +22,25 @@ namespace TestIIS.Controllers
             {
                 return View(db.Items.ToList());
             }
-              
+
+        }
+
+        public ActionResult ChosenSelectPage()
+        {
+            List<SelectItemViewModel> model = new List<SelectItemViewModel>();
+            int ids = 1;
+            var fakerItem = new Faker<SelectItemViewModel>("uk")
+
+                .RuleFor(o => o.Id, f => ids++)
+                .RuleFor(o => o.Name, f => f.Address.City());
+
+            for(int i = 0; i < 50; ++i)
+            {
+                SelectItemViewModel item = fakerItem.Generate();
+                model.Add(item);
+            }
+          
+            return View(model);
         }
 
 
@@ -38,12 +57,12 @@ namespace TestIIS.Controllers
             {
                 context.Items.Add(new ItemsAddViewModel() { Author = model.Author, Title = model.Title, Description = model.Description });
                 context.SaveChanges();
-                
+
             }
 
 
 
-                return View();
+            return View();
         }
 
         [HttpPost]

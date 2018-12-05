@@ -1,0 +1,47 @@
+﻿@model IEnumerable<TestIIS.Models.SelectItemViewModel>
+
+
+@{
+    ViewBag.Title = "ChosenSelectPage";
+}
+
+<h2>ChosenSelectPage</h2>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <select data-placeholder="Select City"
+                name="SelectListCityes"
+                id="listSity"
+                multiple class="my-chosen">
+            <option value=""></option>
+            @foreach (var city in Model)
+            {
+                <option value="@city.Id">@city.Name</option>
+            }
+        </select>
+    </div>
+
+</div>
+
+@section styles{
+
+    <link href="~/Content/bootstrap-chosen.css" rel="stylesheet" />
+    <style>
+        select {
+            width: 200px;
+        }
+    </style>
+}
+
+@section scripts{
+    <script src="~/Scripts/chosen.jquery.js"></script>
+    <script>
+        $(function () {
+            $(".my-chosen").chosen();
+
+        });
+    </script>
+
+}
