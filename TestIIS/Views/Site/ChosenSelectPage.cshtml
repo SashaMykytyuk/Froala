@@ -10,18 +10,23 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <select data-placeholder="Select City"
-                name="SelectListCityes"
-                id="listSity"
-                multiple class="my-chosen">
-            <option value=""></option>
-            @foreach (var city in Model)
-            {
-                <option value="@city.Id">@city.Name</option>
-            }
-        </select>
-    </div>
+    @using (Html.BeginForm())
+    {
+        <div class="col-md-12">
+            <select data-placeholder="Select City"
+                    name="SelectListCityes"
+                    id="listSity"
+                    multiple class="my-chosen">
+                <option value=""></option>
+                @foreach (var city in Model)
+                {
+                    <option value="@city.Id">@city.Name</option>
+                }
+            </select>
+        </div>
+        <input type="submit" class="btn" value="pushToServer" />
+    }
+
 
 </div>
 

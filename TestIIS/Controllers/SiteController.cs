@@ -13,6 +13,22 @@ namespace TestIIS.Controllers
 {
     public class SiteController : Controller
     {
+        List<SelectItemViewModel> citys;
+        SiteController()
+        {
+            citys = new List<SelectItemViewModel>();
+            int ids = 1;
+            var fakerItem = new Faker<SelectItemViewModel>()
+
+                .RuleFor(o => o.Id, f => ids++)
+                .RuleFor(o => o.Name, f => f.Address.City());
+
+            for (int i = 0; i < 50; ++i)
+            {
+                SelectItemViewModel item = fakerItem.Generate();
+                citys.Add(item);
+            }
+        }
 
         [HttpGet]
         public ActionResult VievItems()
@@ -24,6 +40,14 @@ namespace TestIIS.Controllers
             }
 
         }
+
+
+        public ActionResult PagginationPage(int page = 1)
+        {
+           
+        }
+
+
 
         public ActionResult ChosenSelectPage()
         {
@@ -43,10 +67,30 @@ namespace TestIIS.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult ChosenSelectPage(int [] SelectListCityes)
+        {
+            if (SelectListCityes.Length == 5)
+                return RedirectToAction("Contact", "Home");
+            List<SelectItemViewModel> model = new List<SelectItemViewModel>();
+            int ids = 1;
+            var fakerItem = new Faker<SelectItemViewModel>("uk")
+
+                .RuleFor(o => o.Id, f => ids++)
+                .RuleFor(o => o.Name, f => f.Address.City());
+
+            for (int i = 0; i < 50; ++i)
+            {
+                SelectItemViewModel item = fakerItem.Generate();
+                model.Add(item);
+            }
+
+            return View(model);
+        }
 
 
-        // GET: Site
-        public ActionResult Add()
+            // GET: Site
+            public ActionResult Add()
         {
             return View();
         }
